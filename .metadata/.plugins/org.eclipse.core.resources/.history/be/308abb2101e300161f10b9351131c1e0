@@ -1,0 +1,5 @@
+
+public class Readfile {
+private  String filePath="oscar.wilde.txt";
+
+}

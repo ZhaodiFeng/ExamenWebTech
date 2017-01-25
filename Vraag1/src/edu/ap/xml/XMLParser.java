@@ -13,12 +13,10 @@ import java.io.*;
 
 public class XMLParser {
 	
-	private String INPUTFILE = "/Users/philippepossemiers/Desktop/races.xml";
+	private String INPUTFILE = "Registraties.xml";
 	
-	/** Get all races from the xml file and return them 
-	 * in html format
-	 */
-	public String getRaces() {
+	
+	public String getRegs() {
 		File inputFile = new File(INPUTFILE);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
@@ -27,16 +25,20 @@ public class XMLParser {
 			dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
 	        doc.getDocumentElement().normalize();
-	        String result = "<h2>Races</h2>";
+	        String result = "<h2>Regs</h2>";
 	        
-	        NodeList races = doc.getElementsByTagName("race");
+	        NodeList regs = doc.getElementsByTagName("reg");
 
-	        for (int i = 0; i < races.getLength(); i++) {
-	        	 Node nNode = races.item(i);
+	        for (int i = 0; i < regs.getLength(); i++) {
+	        	 Node nNode = regs.item(i);
 	        	 Element eElement = (Element) nNode;
 	        	 
-	        	 result += "<br/><b>Name : </b>" + eElement.getAttribute("name");
-	        	 result += "<br/><b>Distance : </b>" + eElement.getAttribute("distance");
+	        	 result += "<br/><b>ID : </b>" + eElement.getAttribute("id");
+	        	 result += "<br/><b>Date : </b>" + eElement.getAttribute("date");
+	        	 result += "<br/><b>Name : </b>" + eElement.getElementsByTagName("name").item(0).getTextContent();
+	        	 result += "<br/><b>GeboorteDatum : </b>" + eElement.getElementsByTagName("geboorteDatum").item(0).getTextContent();
+	        	 result += "<br/><b>Verpleegkundige : </b>" + eElement.getElementsByTagName("verpleegkundige").item(0).getTextContent();
+	        	 result += "<br/><b>diagnose : </b>" + eElement.getElementsByTagName("diagnose").item(0).getTextContent();
 	        	 result += "<br/>";
 	        }
 
@@ -50,7 +52,7 @@ public class XMLParser {
 	/** Get the race with race_id and return them 
 	 * in html format
 	 */
-	public String getRace(String race_id) {
+	public String getReg(String reg_id) {
 		File inputFile = new File(INPUTFILE);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
@@ -59,19 +61,24 @@ public class XMLParser {
 			dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
 	        doc.getDocumentElement().normalize();
-	        String result = "<h2>Race</h2>";
+	        String result = "<h2>Reg</h2>";
 	        
-	        NodeList races = doc.getElementsByTagName("race");
+	        NodeList regs = doc.getElementsByTagName("reg");
 
-	        for (int i = 0; i < races.getLength(); i++) {
+	        for (int i = 0; i < regs.getLength(); i++) {
 	        	
-	        	 Node nNode = races.item(i);
+	        	 Node nNode = regs.item(i);
 	        	 Element eElement = (Element) nNode;
 	        	 
-	        	 if(eElement.getAttribute("id").equalsIgnoreCase(race_id)) {
-	        		 result += "<br/><b>Name : </b>" + eElement.getAttribute("name");
-	        		 result += "<br/><b>Distance : </b>" + eElement.getAttribute("distance");
-	        		 result += "<br/>";
+	        	 if(eElement.getAttribute("id").equalsIgnoreCase(reg_id)) {
+	        		 
+		        	 result += "<br/><b>ID : </b>" + eElement.getAttribute("id");
+		        	 result += "<br/><b>Date : </b>" + eElement.getAttribute("date");
+		        	 result += "<br/><b>Name : </b>" + eElement.getElementsByTagName("name").item(0).getTextContent();
+		        	 result += "<br/><b>GeboorteDatum : </b>" + eElement.getElementsByTagName("geboorteDatum").item(0).getTextContent();
+		        	 result += "<br/><b>Verpleegkundige : </b>" + eElement.getElementsByTagName("verpleegkundige").item(0).getTextContent();
+		        	 result += "<br/><b>diagnose : </b>" + eElement.getElementsByTagName("diagnose").item(0).getTextContent();
+		        	 result += "<br/>";
 	        	 }
 	        }
 
@@ -84,85 +91,10 @@ public class XMLParser {
 	
 	/** Get all runners for the race with race_id and return them
 	 * in valid html format
+
 	 */
-	public String getRunners(String race_id) {
-		File inputFile = new File(INPUTFILE);
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder;
-        
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(inputFile);
-	        doc.getDocumentElement().normalize();
-	        String result = "<h2>Runners</h2>";
-	        
-	        NodeList races = doc.getElementsByTagName("race");
 
-	        for (int i = 0; i < races.getLength(); i++) {
-	        	
-	        	 Node race = races.item(i);
-	        	 Element eElement = (Element)race;
-	        	 
-	        	 if(eElement.getAttribute("id").equalsIgnoreCase(race_id)) {
-	        		 NodeList runners = eElement.getElementsByTagName("runner");
-	        		 for (int j = 0; j < runners.getLength(); j++) {
-	        			 Node runner = runners.item(j);
-	        			 Element eElement2 = (Element)runner;
-	        			 result += "<br/><b>First Name : </b>" + eElement2.getAttribute("first_name");
-		        		 result += "<br/><b>Last Name : </b>" + eElement2.getAttribute("last_name");
-		        		 result += "<br/><b>Age : </b>" + eElement2.getAttribute("age");
-	        		 }
-	        	 }
-	        }
-
-	        return result;
-		} 
-		catch (Exception e) {
-			return e.getMessage();
-		}
-	}
-	
-	/** Delete the rqce with race_id and return all races in 
-	 * valid format
-	 */
-	public String deleteRace(String race_id) {
-		File inputFile = new File(INPUTFILE);
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder;
-        
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(inputFile);
-	        doc.getDocumentElement().normalize();
-	        
-	        NodeList races = doc.getElementsByTagName("race");
-
-	        for (int i = 0; i < races.getLength(); i++) {
-	        	
-	        	 Node nNode = races.item(i);
-	        	 Element eElement = (Element)nNode;
-	        	 
-	        	 if(eElement.getAttribute("id").equalsIgnoreCase(race_id)) {
-	        		 eElement.getParentNode().removeChild(eElement);
-	        		 Transformer transformer = TransformerFactory.newInstance().newTransformer();
-	                 DOMSource source = new DOMSource(doc);
-	                 StreamResult result = new StreamResult(new StringWriter());
-	                 transformer.transform(source, result);
-	        	 }
-	        }
-
-	        return this.getRaces();
-		} 
-		catch (Exception e) {
-			return e.getMessage();
-		}
-	}
-	
-	/**
-	 * Add a race and return all races in
-	 * html format
-	 */
-	public String addRace(String xml) {
+	public String addReg(String xml) {
 		File inputFile = new File(INPUTFILE);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         // set validating false to enable copying
@@ -191,23 +123,14 @@ public class XMLParser {
 			StreamResult result = new StreamResult(new File(INPUTFILE));
 			transformer.transform(source, result);
 	        
-	        return this.getRaces();
+	        return this.getRegs();
 		} 
 		catch (Exception e) {
 			return e.getMessage();
 		}
 	}
 
-	/**
-	 * Add a runner to race with race_id and 
-	 * return all races in html format
-	 */
-	public String addRunner(String race_id, String xml) {
-		
-		// implementation left to students
-		
-		return this.getRaces();
-	}
+
 	
 	/**
 	 * Utility method to print xml document

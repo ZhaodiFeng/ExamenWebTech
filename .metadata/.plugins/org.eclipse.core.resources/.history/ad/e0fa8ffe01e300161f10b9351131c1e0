@@ -1,0 +1,46 @@
+import java.io.File;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+public class Readfile {
+private  String filePath="oscar.wilde.txt";
+
+public String getAllQuotes(){
+	File inputFile = new File(filePath);
+    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder dBuilder;
+    
+	try {
+		dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(inputFile);
+        doc.getDocumentElement().normalize();
+        String result = "<h2>Regs</h2>";
+        
+        NodeList regs = doc.getElementsByTagName("reg");
+
+        for (int i = 0; i < regs.getLength(); i++) {
+        	 Node nNode = regs.item(i);
+        	 Element eElement = (Element) nNode;
+        	 
+        	 result += "<br/><b>ID : </b>" + eElement.getAttribute("id");
+        	 result += "<br/><b>Date : </b>" + eElement.getAttribute("date");
+        	 result += "<br/><b>Name : </b>" + eElement.getElementsByTagName("name").item(0).getTextContent();
+        	 result += "<br/><b>GeboorteDatum : </b>" + eElement.getElementsByTagName("geboorteDatum").item(0).getTextContent();
+        	 result += "<br/><b>Verpleegkundige : </b>" + eElement.getElementsByTagName("verpleegkundige").item(0).getTextContent();
+        	 result += "<br/><b>diagnose : </b>" + eElement.getElementsByTagName("diagnose").item(0).getTextContent();
+        	 result += "<br/>";
+        }
+
+        return result;
+	} 
+	catch (Exception e) {
+		return e.getMessage();
+	}
+}
+}
