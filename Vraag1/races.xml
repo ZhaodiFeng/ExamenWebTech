@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<races>
+<race name="Antwerp Marathon" date="11/08/2016" distance="42" id="9">
+ <uri>race/9</uri>
+ <description>De Antwerpse marathon</description>
+ <runners>
+  <runner first_name="Bart" last_name="De Wever" age="47" id="21">
+   <uri>/race/9/runner/21</uri>
+  </runner>
+  <runner first_name="Andrew" last_name="Glover" age="22" id="20">
+   <uri>/race/9/runner/20</uri>
+  </runner>
+ </runners>
+</race>
+<race name="Antwerp Miles" date="12/08/2016" distance="22" id="10">
+ <uri>race/10</uri>
+ <description>De Antwerps miles</description>
+ <runners>
+  <runner first_name="Bert" last_name="Bever" age="47" id="12">
+   <uri>/race/9/runner/12</uri>
+  </runner>
+  <runner first_name="Gary" last_name="Glover" age="22" id="11">
+   <uri>/race/9/runner/11</uri>
+  </runner>
+ </runners>
+</race>
+</races>
